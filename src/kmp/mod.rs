@@ -43,11 +43,11 @@ impl KMP {
         let mut t_i: usize = 0;
         let mut p_i: usize = 0;
         let target_len = target.len();
-        let mut result_idx = 0i32;
+        let mut result_idx = -1i32;
         let pattern_len = self.pattern_length;
         while (t_i <= target_len - 1) && (p_i <= pattern_len - 1) {
             if target[t_i] == self.pattern[p_i] {
-                if result_idx == 0 {
+                if result_idx == -1 {
                     result_idx = t_i as i32;
                 }
                 t_i = t_i + 1;
@@ -58,11 +58,11 @@ impl KMP {
             } else {
                 if p_i == 0 {
                     p_i = 0;
+		    t_i = t_i + 1;
                 } else {
                     p_i = self.failure_function[p_i - 1];
                 }
-                t_i = t_i + 1;
-                result_idx = 0;
+                result_idx = -1;
             }
         }
         -1
